@@ -1,0 +1,31 @@
+# Project Structure Diagram
+
+Arrows mean "calls or uses". The test file tests every file, therefor
+uses each file.
+
+flowchart
+
+    main["main.py<br/>Runs all parts"]
+    greedy["greedy.py<br/>Part 1: greedy strategies"]
+    brute["brute_force.py<br/>Part 2: all subsets"]
+    report["report_output.py<br/>Part 3: printing"]
+    data["experiments.py<br/>Data and capacity"]
+    tests["test_knapsack.py<br/>Tests all modules"]
+
+    main --> greedy
+    main --> brute
+    main --> report
+    greedy --> data
+    brute --> data
+    report --> data
+
+    tests -.-> data
+
+--- Module descriptions ---
+
+- **main.py**: entry point. Runs the greedy strategies, the brute-force search, and the comparison summary, in that order.
+- **greedy.py**: three greedy strategies (highest rating, lightest, best ratio) built on one shared helper.
+- **brute_force.py**: checks all 4096 subsets with a bitmask and returns the top three valid ones. Also holds the DP pseudocode.
+- **report_output.py**: formats each result and prints the matched / didn't-match summary.
+- **experiments.py**: the 12 experiments, the 700 kg capacity, and the `ratio` and `totals` helpers.
+- **test_knapsack.py**: verification tests and edge cases.
