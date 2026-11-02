@@ -77,8 +77,8 @@ All members will contribute to the project and participate in the final screenca
 | :---- | :---- | :---- | :---- |
 | Create GitHub repository | Verification | Done | https\://github.com/VictorMaiVM/CS-2430-Project-3-Optimal-selection\_PLO-CS-4 |
 | Create Project Plan | Communications | Done | docs/ProjectPlan.md |
-| Create design documentation | Team | Not Started | — |
-| Develop three greedy algorithms | Implementation | Not Started | — |
+| Create design documentation | Team | Done | commit# b392624 |
+| Develop three greedy algorithms | Implementation | Done | commit# 09cad06 |
 | Develop brute-force algorithm | Implementation | Not Started | — |
 | Create test plan | Verification | Not Started | — |
 | Test algorithms and record results | Verification | Not Started | — |
