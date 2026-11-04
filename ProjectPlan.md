@@ -17,7 +17,7 @@ We will implement three greedy algorithms and a brute-force algorithm, compare t
 ## **2\. Team Roles and Responsibilities**
 
 | Team Member | Role | Responsibilities |
-| ----- | ----- | ----- |
+| :---: | :---: | :---: |
 | Dominique Frank | Communications Lead | Project documentation, report, README, and final submission |
 | Erich | Implementation Lead | Programming, algorithm implementation, and code integration |
 | Victor | Verification Lead | Testing, test plan, and correctness verification |
@@ -77,8 +77,8 @@ All members will contribute to the project and participate in the final screenca
 | :---- | :---- | :---- | :---- |
 | Create GitHub repository | Verification | Done | https\://github.com/VictorMaiVM/CS-2430-Project-3-Optimal-selection\_PLO-CS-4 |
 | Create Project Plan | Communications | Done | docs/ProjectPlan.md |
-| Create design documentation | Team | Done | commit# b392624 |
-| Develop three greedy algorithms | Implementation | Done | commit# 09cad06 |
+| Create design documentation | Team | Not Started | — |
+| Develop three greedy algorithms | Implementation | Not Started | — |
 | Develop brute-force algorithm | Implementation | Not Started | — |
 | Create test plan | Verification | Not Started | — |
 | Test algorithms and record results | Verification | Not Started | — |
@@ -90,7 +90,7 @@ All members will contribute to the project and participate in the final screenca
 
 **Status Options:** Not Started / In Progress / Done / Blocked
 
-When a task is marked Done, include a GitHub commit, pull request, or other evidence link.
+## 
 
 ## **6\. Project Deliverables**
 
@@ -104,13 +104,13 @@ When a task is marked Done, include a GitHub commit, pull request, or other evid
 
 * Working source code implementing required algorithms  
 * Completed formal team report (3–5 pages, excluding tables and appendices)  
-* README containing build and run instructions  
-* CONTRIBUTIONS.md documenting team contributions  
+* Finish the README that has build and run instructions  
+* The CONTRIBUTIONS.md documenting team contributions  
 * Completed testing documentation  
-* Team screencast demonstrating the program  
+* Team screencast demonstrating the program less than 10 min  
 * Final repository-exported ZIP file
 
-The formal report will be submitted separately from the ZIP file.
+**The formal report will be submitted separately from the ZIP file.**
 
 ## **7\. Communication and Collaboration**
 
@@ -118,9 +118,13 @@ We will mainly use Discord to communicate, discuss project progress, ask questio
 
 The Communications Lead will help keep the documentation organized, track progress, and make sure everything is ready for the final submission.
 
-We will all review code, and changes, test the program, and help each other out when needed to make sure we stay on track.
+We will review code, and changes, test the program, and help each other out when needed to make sure we stay on track.
 
-**8\. Potential Risks and Solutions**
+## 
+
+## 
+
+## **8\. Potential Risks and Solutions**
 
 | Risk | Planned Solution |
 | ----- | ----- |
@@ -130,29 +134,6 @@ We will all review code, and changes, test the program, and help each other out 
 | Incorrect or incomplete documentation | Review requirements before final submission |
 | New functional requirement | Evaluate the change request and update the project plan |
 
-## **9\. Weekly Progress Updates**
-
-### **Week 1**
-
-**Completed:** TBD  
-**In Progress:** TBD  
-**Problems Encountered:** TBD  
-**Next Steps:** TBD
-
-### **Week 2**
-
-**Completed:** TBD  
-**In Progress:** TBD  
-**Problems Encountered:** TBD  
-**Next Steps:** TBD
-
-### **Final Update**
-
-**Completed:** TBD  
-**Remaining Tasks:** TBD  
-**Final Verification:** TBD
-
-## **10\. Completion Criteria**
+## **9.Completion Criteria**
 
 The project will be considered complete when all required algorithms execute correctly, the output is verified, all documentation is finished, and the final report, ZIP file, and screencast are ready for submission.
-
