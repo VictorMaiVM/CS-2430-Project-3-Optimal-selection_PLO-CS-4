@@ -11,10 +11,10 @@
 #therefore visits every possible subset exactly once.
 
 
-from experiments import EXPERIMENTS, CAPACITY, totals
+from experiments import EXPERIMENTS, CAPACITY_LIMIT, totals
 
 
-def brute_force_top3(experiments=EXPERIMENTS, capacity=CAPACITY):
+def brute_force_top3(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT):
     #Check every subset and return (top3, subsets_checked, valid_count).
 
     #top3 is a list of up to 3 tuples: (chosen, total_weight, total_rating),

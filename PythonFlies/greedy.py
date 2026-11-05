@@ -14,7 +14,7 @@
 #LOWER experiment number comes first.
 
 
-from experiments import EXPERIMENTS, CAPACITY, ratio
+from experiments import EXPERIMENTS, CAPACITY_LIMIT, ratio
 
 
 def greedy_select(experiments, capacity, primary_key, descending):
@@ -39,16 +39,16 @@ def greedy_select(experiments, capacity, primary_key, descending):
     return chosen
 
 
-def highest_rating_first(experiments=EXPERIMENTS, capacity=CAPACITY):
+def highest_rating_first(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT):
     #Strategy 1: take the highest-rated experiments first.
     return greedy_select(experiments, capacity, lambda e: e.rating, True)
 
 
-def lightest_first(experiments=EXPERIMENTS, capacity=CAPACITY):
+def lightest_first(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT):
     #Strategy 2: take the lightest experiments first.
     return greedy_select(experiments, capacity, lambda e: e.weight, False)
 
 
-def best_ratio_first(experiments=EXPERIMENTS, capacity=CAPACITY):
+def best_ratio_first(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT):
     #Strategy 3: take the best rating/weight ratio first.
     return greedy_select(experiments, capacity, ratio, True)
