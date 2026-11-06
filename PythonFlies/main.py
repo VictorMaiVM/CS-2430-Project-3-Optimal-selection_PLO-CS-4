@@ -10,6 +10,7 @@
 from greedy import highest_rating_first, lightest_first, best_ratio_first
 from brute_force import brute_force_top3
 from report_output import print_result, print_comparison
+from dynamic_programming import dp_knapsack, compare_runtimes
 
 
 def main():
@@ -34,6 +35,13 @@ def main():
     # Part 3: comparison summary.
     print("=========== PART 3: COMPARISON ===========\n")
     print_comparison(greedy_results, top3[0][2])
+
+    # Part 4: dynamic programming
+    print("=========== PART 4: Dynamic Programming ===========\n")
+    dp_chosen, dp_weight, dp_rating, _ = dp_knapsack()
+    print_result("Dynamic Programming", dp_chosen, dp_weight, dp_rating)
+    print(f"Matches brute-force optimum: {dp_rating == top3[0][2]}\n")
+    compare_runtimes()
 
 
 if __name__ == "__main__":
