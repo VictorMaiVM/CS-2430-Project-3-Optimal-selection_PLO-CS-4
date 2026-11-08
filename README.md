@@ -22,7 +22,14 @@ For Project 3, our team will be working on the 0/1 Knapsack Problem using Python
 
 ## **3\. Project Requirements**
 
-TBU
+Our program will use Python to solve the 0/1 Knapsack Problem using four different approaches:
+
+* Highest Rating First: Selects experiments with the highest ratings while staying within 700 kg.  
+* Lightest First: Selects experiments with the lowest weights first.  
+* Best Rating-to-Weight Ratio: Prioritizes experiments with the highest rating compared to their weight.  
+* Brute Force: Checks all 4,096 possible combinations to find the three best valid solutions.
+
+The program will display the selected experiments, total weights, and ratings for each method. We will compare the greedy algorithms against the optimal brute-force solution to see which performed best.
 
 ## **4\. Project Structure**
 
