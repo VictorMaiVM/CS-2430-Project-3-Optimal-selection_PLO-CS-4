@@ -18,7 +18,7 @@ We will implement three greedy algorithms and a brute-force algorithm, compare t
 
 | Team Member | Role | Responsibilities |
 | :---: | :---: | :---: |
-| Dominique Frank | Communications Lead | Project documentation, report, README, and final submission |
+| Dominique Frank | Communications Lead | Project documentation, report, README, Notes, and final submission |
 | Erich | Implementation Lead | Programming, algorithm implementation, and code integration |
 | Victor | Verification Lead | Testing, test plan, and correctness verification |
 
@@ -77,13 +77,13 @@ All members will contribute to the project and participate in the final screenca
 | :---- | :---- | :---- | :---- |
 | Create GitHub repository | Verification | Done | https\://github.com/VictorMaiVM/CS-2430-Project-3-Optimal-selection\_PLO-CS-4 |
 | Create Project Plan | Communications | Done | docs/ProjectPlan.md |
-| Create design documentation | Team | DONE | commit# b392624 |
-| Develop three greedy algorithms | Implementation | DONE | commit# 09cad06|
-| Develop brute-force algorithm | Implementation | DONE | commit# 9240950 |
-| Create test plan | Verification | -- | — |
-| Test algorithms and record results | Verification | DONE | commit# fe22c87 |
-| Prepare README | Communications | Working on | — |
-| Prepare formal report | Communications / Team | Not Started | — |
+| Create design documentation | Team | Done | commit\# b392624 |
+| Develop three greedy algorithms | Implementation | Done | commit\# 09cad06 |
+| Develop brute-force algorithm | Implementation | Done | commit\# 9240950 |
+| Create test plan | Verification | Not Started | — |
+| Test algorithms and record results | Verification | Done | commit\# fe22c87 |
+| Prepare README | Communications | In Progress | docs/README.md |
+| Prepare formal report | Communications / Team | In Progress | — |
 | Update CONTRIBUTIONS.md | Communications / Team | Not Started | — |
 | Record screencast | Team | Not Started | — |
 | Prepare final submission | Communications | Not Started | — |
