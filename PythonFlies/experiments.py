@@ -30,6 +30,24 @@ EXPERIMENTS = [
     Experiment(12, "Yeast Fermentation", 27, 4),
 ]
 
+#Revised manifest from the Change Request
+REVISED_EXPERIMENTS = [
+    Experiment("1", "Cloud Patterns", 36, 5),
+    Experiment("2", "Solar Flares", 264, 9),
+    Experiment("3", "Solar Power", 188, 6),
+    Experiment("4", "Binary Stars", 203, 8),
+    Experiment("5", "Relativity", 104, 8),
+    Experiment("6", "Seed Viability", 7, 4),
+    Experiment("7", "Sun Spots", 90, 2),
+    Experiment("8", "Mice Tumors", 65, 8),
+    Experiment("9", "Microgravity Plant Growth", 75, 5),
+    Experiment("10", "Micrometeorites", 170, 9),
+    Experiment("11", "Cosmic Rays (Primary Band)", 80, 7),
+    Experiment("11a", "Comic Rays (Secondary Band)", 10, 5),
+    Experiment("12", "Yeast Fermentation", 27, 4),
+]
+
+EXPERIMENTS = REVISED_EXPERIMENTS
 
 def ratio(exp):
     #Return the rating-to-weight score (rating / weight) for an experiment.
