@@ -3,38 +3,45 @@
 #Course:        CS 2430, section 502
 #Project:       Programming Project 3
 
-#Purpose: Part 2 - exhaustive search over all 2^12 = 4096 subsets, plus the
-#required dynamic programming pseudocode.
+#Purpose: Part 2 - exhaustive search over every possible selection, plus the
+#required dynamic programming pseudocode (Part 4).
 
-#How the bitmask loop works: a number from 0 to 4095 written in binary has 12
-#bits. If bit i is 1, experiment i is in the subset. Counting from 0 to 4095
-#therefore visits every possible subset exactly once.
+#With the revised manifest there are 13 experiments, so 2^13 = 8192 selections
+#are checked. The count includes selections that break one or more rules; the
+#shared evaluator (manifest.py) decides which are feasible.
+
+#How the bitmask works: a number from 0 to 8191 written in binary has 13 bits.
+#If bit i is 1, experiment i (by list position) is in the selection. Counting
+#from 0 to 8191 visits every possible selection exactly once.
 
 
 from experiments import EXPERIMENTS, CAPACITY_LIMIT, totals
+from manifest_rules import evaluate_manifest
 
 
-def brute_force_top3(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT):
-    #Check every subset and return (top3, subsets_checked, valid_count).
+def brute_force_top3(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT,
+                     apply_rules=True):
+    #Check every selection and return (top3, selections_checked, feasible_count).
 
-    #top3 is a list of up to 3 tuples: (chosen, total_weight, total_rating),
-    #best first. The first entry is the optimal solution.
+    #top3 is a list of up to 3 tuples: (chosen, adjusted_mass, total_rating),
+    #best first. The first entry is the optimal feasible manifest.
+    #apply_rules=False solves the original problem (capacity only).
 
     n = len(experiments)
-    valid = []
-    subsets_checked = 0
+    feasible = []
+    selections_checked = 0
 
     for bitmask in range(2 ** n):
-        subsets_checked += 1
+        selections_checked += 1
         # Pick experiment i whenever bit i of j is set.
         chosen = [experiments[i] for i in range(n) if bitmask & (1 << i)]
-        weight, rating = totals(chosen)
-        if weight <= capacity:
-            valid.append((chosen, weight, rating))
+        result = evaluate_manifest(chosen, capacity, apply_rules)
+        if result.feasible:
+            feasible.append((chosen, result.adjusted_mass, result.rating))
 
     # Highest rating first, ties broken by lighter total weight.
-    valid.sort(key=lambda s: (-s[2], s[1]))
-    return valid[:3], subsets_checked, len(valid)
+    feasible.sort(key=lambda s: (-s[2], s[1]))
+    return feasible[:3], selections_checked, len(feasible)
 
 # ----------------------------------------------------------------------
 # DYNAMIC PROGRAMMING PSEUDOCODE

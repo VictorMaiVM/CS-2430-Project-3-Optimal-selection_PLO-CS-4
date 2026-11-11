@@ -15,14 +15,12 @@ from dynamic_programming import dp_knapsack, compare_runtimes
 
 def main():
     # Part 1: three greedy strategies.
-    print("=========== PART 1: GREEDY STRATEGIES ===========\n")
+    print("=========== PART 1: GREEDY STRATEGIES(revised rules) ===========\n")
     greedy_results = {
         "Highest Rating First": highest_rating_first(),
         "Lightest First": lightest_first(),
         "Best Rating/Weight Ratio": best_ratio_first(),
     }
-    for name, chosen in greedy_results.items():
-        print_result(name, chosen)
 
     # Part 2: brute force, top 3 valid subsets.
     print("=========== PART 2: BRUTE FORCE ===========\n")
