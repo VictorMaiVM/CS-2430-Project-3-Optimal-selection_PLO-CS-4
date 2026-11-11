@@ -45,7 +45,7 @@ def evaluate_manifest(chosen, capacity=CAPACITY_LIMIT, apply_rules=True):
         return Evaluation(feasible, adjusted_mass, rating,
                           "Ok" if feasible else "Over capacity")
 
-    if CREDIT_KG <= ids:
+    if CREDIT_IDS <= ids:
         return Evaluation(False, adjusted_mass, rating, "Solar limit violated")
 
     if "11a" in ids and "11" not in ids:
