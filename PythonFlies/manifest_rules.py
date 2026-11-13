@@ -45,11 +45,16 @@ def evaluate_manifest(chosen, capacity=CAPACITY_LIMIT, apply_rules=True):
         return Evaluation(feasible, adjusted_mass, rating,
                           "Ok" if feasible else "Over capacity")
 
-    if CREDIT_IDS <= ids:
+    solar_count = len(SOLAR_IDS.intersection(ids))
+    if solar_count > 2:
         return Evaluation(False, adjusted_mass, rating, "Solar limit violated")
 
+    if CREDIT_IDS <= ids:
+        # return Evaluation(False, adjusted_mass, rating, "Solar limit violated")
+        adjusted_mass -= CREDIT_KG
+
     if "11a" in ids and "11" not in ids:
-        return Evaluation(False, adjusted_mass, rating, "lla selected without 11")
+        return Evaluation(False, adjusted_mass, rating, "11a selected without 11")
 
     if adjusted_mass > capacity:
         return Evaluation(False, adjusted_mass, rating, f"Over capacity ({adjusted_mass} kg)")
