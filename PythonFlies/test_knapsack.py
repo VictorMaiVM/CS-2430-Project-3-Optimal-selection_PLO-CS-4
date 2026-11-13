@@ -7,8 +7,8 @@
 
 
 import unittest
-from experiments import EXPERIMENTS, totals
-from greedy import highest_rating_first, lightest_first, best_ratio_first
+from experiments import EXPERIMENTS, totals, Experiment
+from greedy import highest_rating_first, lightest_first, best_ratio_first, greedy_select
 from brute_force import brute_force_top3
 from manifest_rules import manifest_from_ids, evaluate_manifest
 
@@ -72,8 +72,6 @@ class TestKnapsack(unittest.TestCase):
         self.assertTrue("2" in ids or "10" in ids)
 
     def test_tie_break_rule(self):
-        from experiments import Experiment
-        from greedy import greedy_select
         tied_experiments = [
             Experiment("A", "Heavy Tied Item", 50, 5),
             Experiment("B", "Light Tied Item", 20, 5),

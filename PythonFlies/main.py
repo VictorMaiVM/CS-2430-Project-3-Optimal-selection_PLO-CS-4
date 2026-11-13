@@ -9,7 +9,7 @@
 
 from greedy import highest_rating_first, lightest_first, best_ratio_first
 from brute_force import brute_force_top3
-from report_output import print_result, print_comparison
+from report_output import print_result, print_comparison, ids_of, run_rule_tests
 from dynamic_programming import dp_knapsack, compare_runtimes
 
 
@@ -21,14 +21,31 @@ def main():
         "Lightest First": lightest_first(),
         "Best Rating/Weight Ratio": best_ratio_first(),
     }
+    for name, chosen in greedy_results.items():
+        print_result(name, chosen)
+
+        # Optional variant: one retry pass so 11a can join after 11 is selected.
+    print("--- Variant: same strategies with one retry pass for skipped items ---")
+    retry_results = {
+        "Highest Rating First (retry)": highest_rating_first(retry_skipped=True),
+        "Lightest First (retry)": lightest_first(retry_skipped=True),
+        "Best Ratio First (retry)": best_ratio_first(retry_skipped=True),
+    }
+    for name, chosen in retry_results.items():
+        print(f"  {name:<30} IDs: {ids_of(chosen)}")
+    print()
 
     # Part 2: brute force, top 3 valid subsets.
     print("=========== PART 2: BRUTE FORCE ===========\n")
-    top3, checked, valid_count = brute_force_top3()
-    print(f"Subsets examined: {checked}   Valid (<= 700 kg): {valid_count}\n")
-    for rank, (chosen, weight, rating) in enumerate(top3, start=1):
+    top3, checked, feasible_count = brute_force_top3()
+    print(f"Selections examined: {checked}   Feasible: {feasible_count}\n")
+    for rank, (chosen, mass, rating) in enumerate(top3, start=1):
         label = f"Rank {rank}" + (" (OPTIMAL)" if rank == 1 else "")
-        print_result(label, chosen, weight, rating)
+        print_result(label, chosen, mass, rating)
+
+    # Rule tests required by the Change Request.
+    print("=========== RULE TESTS ===========\n")
+    run_rule_tests()
 
     # Part 3: comparison summary.
     print("=========== PART 3: COMPARISON ===========\n")
