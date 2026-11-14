@@ -202,3 +202,51 @@ Backtrack to find the chosen experiments:
 Cost: DP fills n x CAPACITY cells (12 x 700 = 8,400), while brute force
 examines 2^n subsets. Brute force doubles with every added item; DP grows
 only linearly in n for a fixed capacity.
+
+7. ## Shared manifest evaluator (manifest_rules.py)
+
+Both the greedy and brute-force solutions call this one function, so the
+revised rules are enforced in a single place.
+
+CONSTANT SOLAR_IDS  = {"2", "3", "7"}
+CONSTANT CREDIT_IDS = {"6", "12"}
+CONSTANT CREDIT_KG  = 7
+
+FUNCTION evaluate_manifest(chosen, capacity, apply_rules = TRUE):
+    ids           = set of experiment IDs in chosen
+    adjusted_mass = sum of baseline weights in chosen
+    rating        = sum of ratings in chosen
+
+    # Original problem (no revised rules): capacity check only
+    IF apply_rules is FALSE:
+        IF adjusted_mass <= capacity:
+            RETURN (feasible, adjusted_mass, rating, "Ok")
+        ELSE:
+            RETURN (not feasible, adjusted_mass, rating, "Over capacity")
+
+    # Rule 1: solar instrument limit (at most two of 2, 3, 7)
+    IF number of IDs in both ids and SOLAR_IDS is more than 2:
+        RETURN (not feasible, adjusted_mass, rating, "Solar limit violated")
+
+    # Rule 2: thermal mass credit (applied once, before the capacity check)
+    IF both "6" and "12" are in ids:
+        adjusted_mass = adjusted_mass - CREDIT_KG
+
+    # Rule 3: Experiment 11a needs Experiment 11
+    IF "11a" is in ids AND "11" is not in ids:
+        RETURN (not feasible, adjusted_mass, rating, "11a selected without 11")
+
+    # Capacity check uses ADJUSTED mass
+    IF adjusted_mass > capacity:
+        RETURN (not feasible, adjusted_mass, rating, "Over capacity")
+
+    RETURN (feasible, adjusted_mass, rating, "Ok")
+
+FUNCTION manifest_from_ids(id_list, experiments):
+    build a lookup from experiment ID to experiment record
+    RETURN the list of records for each ID in id_list
+
+Examples used for the rule tests:
+- {2, 3, 7}: baseline 542 kg, rejected by rule 1.
+- {11a}: rejected by rule 3 because 11 is missing.
+- {1, 2, 4, 6, 10, 12}: baseline 707 kg, the credit brings it to 700 kg, accepted.

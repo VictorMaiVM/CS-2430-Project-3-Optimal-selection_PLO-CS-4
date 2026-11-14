@@ -9,9 +9,10 @@
 #   of Experiments 2, 3, and 7. Reject any candidate that selects all three.
 # 2.Thermal mass credit. If both Experiments 6 and 12 are selected, subtract
 #   7 kg from the candidate manifest’s total baseline mass. This reduces
-# 3.Experiment 12’s charged mass from 27 kg to 20 kg. Experiment 6 still
+#   Experiment 12’s charged mass from 27 kg to 20 kg. Experiment 6 still
 #   contributes 7 kg, and both ratings contribute in full. Apply the credit once
-#   , before checking the 700 kg limit. Experiment 11a prerequisite. A candidate
+#   , before checking the 700 kg limit.
+# 3.Experiment 11a prerequisite. A candidate
 #   may include Experiment 11a only if it also includes Experiment 11. Experiment 11
 #   can fly by itself. Together, the two packages contribute 90 kg and 12 science rating points
 
@@ -28,13 +29,13 @@ Evaluation = namedtuple(
 )
 
 def evaluate_manifest(chosen, capacity=CAPACITY_LIMIT, apply_rules=True):
-    #Check canidate manifest
-    #applies rules: False gives the Original problem(capacity check only),
+    #Check candidate manifest
+    #apply_rules=False gives the Original problem(capacity check only),
     #which dynamic_programming.py uses
     #Returns an evaluation
     #Reason is "Ok" for a feasible manifest, otherwise it says which
     #rule has failed
-    #adjusted mass and rating are always filled in, even for rejects
+    #baseline mass for solat-limit rejects
 
     ids = {e.number for e in chosen}
     adjusted_mass = sum(e.weight for e in chosen)
@@ -50,7 +51,6 @@ def evaluate_manifest(chosen, capacity=CAPACITY_LIMIT, apply_rules=True):
         return Evaluation(False, adjusted_mass, rating, "Solar limit violated")
 
     if CREDIT_IDS <= ids:
-        # return Evaluation(False, adjusted_mass, rating, "Solar limit violated")
         adjusted_mass -= CREDIT_KG
 
     if "11a" in ids and "11" not in ids:
