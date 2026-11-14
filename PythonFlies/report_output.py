@@ -11,7 +11,7 @@ from manifest_rules import evaluate_manifest, manifest_from_ids
 
 def ids_of(chosen):
     #Return a readable string of experiments IDs
-    return ", ".join(e.number for e in chosen)
+    return ", ".join(str(e.number) for e in chosen)
 
 
 def print_result(label, chosen, adjusted_mass=None, rating=None):
