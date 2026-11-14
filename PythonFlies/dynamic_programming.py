@@ -5,6 +5,8 @@
 
 #Purpose: Part 4 (extra credit) - dynamic programming solution to the 0/1
 #knapsack problem, plus a runtime comparison against brute force.
+#This module solves the ORIGINAL 12-experiment problem (capacity only).
+#The revised rules couple experiments together and are not enforced by this table.
 
 #dp[i][w] = best total rating using only the first i experiments with a
 #weight limit of w kg. Each cell makes one choice: skip experiment i, or take
@@ -14,11 +16,11 @@
 
 import time
 
-from experiments import EXPERIMENTS, CAPACITY_LIMIT, totals
+from experiments import BASELINE_EXPERIMENTS, CAPACITY_LIMIT, totals
 from brute_force import brute_force_top3
 
 
-def dp_knapsack(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT):
+def dp_knapsack(experiments=BASELINE_EXPERIMENTS, capacity=CAPACITY_LIMIT):
     #Solve the knapsack with DP.
 
     #Returns (chosen, total_weight, total_rating, table) where table is the
@@ -60,7 +62,7 @@ def compare_runtimes(repeats=20):
 
     start = time.perf_counter()
     for _ in range(repeats):
-        brute_force_top3()
+        brute_force_top3(BASELINE_EXPERIMENTS, CAPACITY_LIMIT, apply_rules=False)
     brute_ms = (time.perf_counter() - start) / repeats * 1000
 
     start = time.perf_counter()
@@ -68,7 +70,7 @@ def compare_runtimes(repeats=20):
         dp_knapsack()
     dp_ms = (time.perf_counter() - start) / repeats * 1000
 
-    n = len(EXPERIMENTS)
+    n = len(BASELINE_EXPERIMENTS)
     print("=== BRUTE FORCE vs DYNAMIC PROGRAMMING ===")
     print(f"  Brute force: {brute_ms:8.2f} ms avg   work ~ 2^n = {2 ** n} subsets")
     print(f"  DP:          {dp_ms:8.2f} ms avg   work ~ n*W  = {n * CAPACITY_LIMIT} cells")

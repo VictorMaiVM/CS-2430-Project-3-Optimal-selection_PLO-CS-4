@@ -6,7 +6,7 @@
 #Purpose: Run every part of the project and print all results.
 #Usage:   python main.py
 
-
+from experiments import BASELINE_EXPERIMENTS, CAPACITY_LIMIT
 from greedy import highest_rating_first, lightest_first, best_ratio_first
 from brute_force import brute_force_top3
 from report_output import print_result, print_comparison, ids_of, run_rule_tests
@@ -15,7 +15,7 @@ from dynamic_programming import dp_knapsack, compare_runtimes
 
 def main():
     # Part 1: three greedy strategies.
-    print("=========== PART 1: GREEDY STRATEGIES(revised rules) ===========\n")
+    print("=========== PART 1: GREEDY STRATEGIES (revised rules) ===========\n")
     greedy_results = {
         "Highest Rating First": highest_rating_first(),
         "Lightest First": lightest_first(),
@@ -24,7 +24,7 @@ def main():
     for name, chosen in greedy_results.items():
         print_result(name, chosen)
 
-        # Optional variant: one retry pass so 11a can join after 11 is selected.
+    # Optional variant: one retry pass so 11a can join after 11 is selected.
     print("--- Variant: same strategies with one retry pass for skipped items ---")
     retry_results = {
         "Highest Rating First (retry)": highest_rating_first(retry_skipped=True),
@@ -55,7 +55,8 @@ def main():
     print("=========== PART 4: Dynamic Programming ===========\n")
     dp_chosen, dp_weight, dp_rating, _ = dp_knapsack()
     print_result("Dynamic Programming", dp_chosen, dp_weight, dp_rating)
-    print(f"Matches brute-force optimum: {dp_rating == top3[0][2]}\n")
+    base_top3, _, _ = brute_force_top3(BASELINE_EXPERIMENTS, CAPACITY_LIMIT, apply_rules=False)
+    print(f"Matches original-problem brute-force optimum: {dp_rating == top3[0][2]}\n")
     compare_runtimes()
 
 

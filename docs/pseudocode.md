@@ -188,9 +188,13 @@ for exceeding the capacity.
 
 5. Main program (main.py)
 
+Runs every part in order and prints all results. The Part 4 comparison is
+made against the original 12-experiment problem, since the dynamic programming
+solution solves that problem (capacity check only).
 
 PROCEDURE main:
-    # Part 1
+
+    # Part 1: three greedy strategies on the revised manifest
     greedy_results = {
         "Highest Rating First":     highest_rating_first(),
         "Lightest First":           lightest_first(),
@@ -199,46 +203,84 @@ PROCEDURE main:
     FOR EACH (name, chosen) IN greedy_results:
         print_result(name, chosen)
 
-# Part 2
-    (top3, checked, valid_count) = brute_force_top3()
-    print checked and valid_count
-    FOR rank FROM 1 TO 3:
-        print_result("Rank " + rank, top3[rank])    # label rank 1 as OPTIMAL
+    # Optional variant: same strategies with one retry pass
+    # (lets Experiment 11a join if 11 was selected after 11a was skipped)
+    retry_results = the three strategies called with retry_skipped = TRUE
+    FOR EACH (name, chosen) IN retry_results:
+        print name and the list of IDs
 
-# Part 3
+    # Part 2: brute force over all 2^13 = 8192 selections
+    (top3, checked, feasible_count) = brute_force_top3()
+    print checked and feasible_count
+    FOR rank FROM 1 TO 3:
+        label = "Rank " + rank   (rank 1 is labeled OPTIMAL)
+        print_result(label, top3[rank])
+
+    # Rule tests required by the Change Request
+    run_rule_tests()
+
+    # Part 3: comparison summary
     print_comparison(greedy_results, rating of top3[1])
 
+    # Part 4 (extra credit): dynamic programming, original 12-experiment problem
+    (dp_chosen, dp_weight, dp_rating, table) = dp_knapsack()
+    print_result("Dynamic Programming", dp_chosen, dp_weight, dp_rating)
+    base_top3 = brute_force_top3(baseline experiments, capacity,
+                                 apply_rules = FALSE)
+    print whether dp_rating equals the rating of base_top3[1]
+    compare_runtimes()
 
-6. Dynamic programming (concept; Part 4)
+6. Dynamic programming (dynamic_programming.py), extra credit
 
+Solves the ORIGINAL 12-experiment problem (capacity check only). The revised
+rules couple experiments together, so this table does not enforce them.
 
 dp[i][w] = best total rating using only the first i experiments
            with a weight limit of w kg
 
-Base case:  dp[0][w] = 0 for every w
+FUNCTION dp_knapsack(experiments, capacity):
+    n = number of experiments                         (12)
+    create table dp with n + 1 rows and capacity + 1 columns, all 0
+        # row 0 is the base case: no experiments, no rating
 
-FOR i FROM 1 TO n:
-    FOR w FROM 0 TO CAPACITY:
-        IF weight[i] > w:
-            dp[i][w] = dp[i-1][w]                       # cannot fit, skip
-        ELSE:
+    FOR i FROM 1 TO n:
+        exp = experiments[i - 1]
+        FOR w FROM 0 TO capacity:
             skip = dp[i-1][w]
-            take = dp[i-1][w - weight[i]] + rating[i]
-            dp[i][w] = MAX(skip, take)
+            IF exp.weight > w:
+                dp[i][w] = skip                       # does not fit
+            ELSE:
+                take = dp[i-1][w - exp.weight] + exp.rating
+                dp[i][w] = MAX(skip, take)
 
-Optimal rating = dp[n][CAPACITY]
-
-Backtrack to find the chosen experiments:
-    w = CAPACITY
+    # The best rating is dp[n][capacity]. Backtrack to find the experiments.
+    chosen = empty list
+    w = capacity
     FOR i FROM n DOWN TO 1:
-        IF dp[i][w] != dp[i-1][w]:
-            experiment i was taken
-            w = w - weight[i]
+        IF dp[i][w] != dp[i-1][w]:                    # value changed: item i taken
+            add experiments[i - 1] to chosen
+            w = w - experiments[i - 1].weight
+    reverse chosen
 
+    RETURN chosen, total weight of chosen, total rating of chosen, dp
 
-Cost: DP fills n x CAPACITY cells (12 x 700 = 8,400), while brute force
-examines 2^n subsets. Brute force doubles with every added item; DP grows
-only linearly in n for a fixed capacity.
+FUNCTION compare_runtimes(repeats = 20):
+    time brute_force_top3 on the original problem (rules off), repeated,
+         and take the average in milliseconds
+    time dp_knapsack, repeated, and take the average in milliseconds
+    print both averages and the work counts:
+         brute force ~ 2^n selections  (4096)
+         DP          ~ n * capacity cells  (12 * 700 = 8400)
+
+Cost: brute force doubles with every added experiment (2^n), while the DP
+table grows linearly in n for a fixed capacity (n * capacity cells), so DP
+scales to much larger problems. Its cost does grow with the capacity value.
+
+Extending DP to the revised rules (not implemented): enumerate the allowed
+combinations of the coupled items (solar limit: up to two of 2, 3, 7;
+thermal credit: both or neither of 6 and 12; 11 and 11a: none, 11 alone, or
+both), then run the table over the remaining independent items with the
+leftover capacity and keep the best result.
 
 7. ## Shared manifest evaluator (manifest_rules.py)
 
