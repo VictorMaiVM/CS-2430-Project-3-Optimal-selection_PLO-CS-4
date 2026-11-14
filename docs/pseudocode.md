@@ -18,33 +18,62 @@ FUNCTION totals(chosen):
 
 2. Greedy strategies (greedy.py)
 
-One helper does all the work. Each strategy only changes the sort rule.
-FUNCTION greedy_select(experiments, capacity, primary_key, descending):
+One helper does all the work. Each strategy only changes the ranking rule.
+The shared evaluator (manifest_rules.py) decides whether a candidate manifest
+is feasible: it applies the three revised rules and checks ADJUSTED mass
+against the capacity.
+
+FUNCTION greedy_select(experiments, capacity, primary_key, descending,
+                       retry_skipped = FALSE):
+
+    position = map from each experiment's ID to its index in the manifest list
+
+    # Ranking rule, with tie-breaks
     sort experiments by:
-        1. primary_key (largest first if descending, else smallest first)
-        2. weight, lighter first          <- tie-break rule
-        3. experiment number, lower first <- second tie-break
+        1. primary_key  (largest first if descending, else smallest first)
+        2. baseline weight, lighter first
+        3. position in the manifest list, earlier first   (11 before 11a)
+    ranked = the sorted list
 
-    chosen = empty list
-    total_weight = 0
+    chosen  = empty list
+    skipped = empty list
 
-    FOR EACH exp IN sorted order:
-        IF total_weight + exp.weight <= capacity:
+    # Main pass: one scan down the ranked list
+    FOR EACH exp IN ranked:
+        candidate = chosen + [exp]
+        IF evaluate_manifest(candidate, capacity) is feasible:
             add exp to chosen
-            total_weight = total_weight + exp.weight
         ELSE:
-            skip exp and keep scanning    <- later, smaller items may still fit
+            add exp to skipped          # never revisited in the main pass
+
+    # Optional retry pass (off by default)
+    IF retry_skipped:
+        FOR EACH exp IN skipped (in original ranking order):
+            candidate = chosen + [exp]
+            IF evaluate_manifest(candidate, capacity) is feasible:
+                add exp to chosen
 
     RETURN chosen
 
-FUNCTION highest_rating_first():
-    RETURN greedy_select(EXPERIMENTS, CAPACITY, rating, descending = TRUE)
 
-FUNCTION lightest_first():
-    RETURN greedy_select(EXPERIMENTS, CAPACITY, weight, descending = FALSE)
+The three strategies differ only in the arguments they pass:
 
-FUNCTION best_ratio_first():
-    RETURN greedy_select(EXPERIMENTS, CAPACITY, ratio, descending = TRUE)
+
+FUNCTION highest_rating_first(...):
+    RETURN greedy_select(experiments, capacity, rating,  descending = TRUE)
+
+FUNCTION lightest_first(...):
+    RETURN greedy_select(experiments, capacity, weight,  descending = FALSE)
+
+FUNCTION best_ratio_first(...):
+    RETURN greedy_select(experiments, capacity, rating / weight,
+                         descending = TRUE)
+
+Handling of Experiment 11a: if 11a is reached before 11 is in `chosen`, the
+candidate manifest breaks the prerequisite rule, so the evaluator marks it
+infeasible and 11a goes to `skipped`. The main pass never goes back, so 11a is
+lost for that run. With retry_skipped = TRUE, one extra pass over `skipped`
+lets 11a join if 11 has been selected since.
 
 
 3. Brute-force search (brute_force.py)

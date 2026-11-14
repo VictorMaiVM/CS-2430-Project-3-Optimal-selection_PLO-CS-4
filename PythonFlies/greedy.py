@@ -39,7 +39,7 @@ def greedy_select(experiments, capacity, primary_key, descending, retry_skipped=
     position = {e.number: i for i, e in enumerate(experiments)}
 
 
-    # Secondary keys (weight, number) always ascending, applied for ties.
+    # weight, position in the manifest list
     def sort_key(exp):
         primary = -primary_key(exp) if descending else primary_key(exp)
         return (primary, exp.weight, position[exp.number])
