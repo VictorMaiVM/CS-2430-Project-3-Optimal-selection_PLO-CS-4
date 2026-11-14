@@ -10,7 +10,7 @@ from experiments import totals
 from manifest_rules import evaluate_manifest, manifest_from_ids
 
 def ids_of(chosen):
-    #Return a readable strong of experiments IDs
+    #Return a readable string of experiments IDs
     return ", ".join(e.number for e in chosen)
 
 
@@ -45,11 +45,11 @@ def print_comparison(greedy_results, optimal_rating):
             verdict = f"DOES NOT MATCH (short by {optimal_rating - result.rating})"
         print(f"  {name:<34} adj. mass {result.adjusted_mass:>3} kg  "
               f"rating {result.rating:>3}  {verdict}")
-        print()
+    print()
 
 
-# Rule tests: (rule, candidate IDs, expected feasible, expected adjusted mass,
-# expected note). The first three come from the Change Request; the rest are
+# Rule tests: (rule, candidate IDs, expected feasible, expected adjusted mass)
+#  The first three come from the Change Request; the rest are
 # extra cases showing each rule's boundary.
 RULE_TESTS = [
     ("Solar limit", ["2", "3", "7"], False, 542),

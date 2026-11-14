@@ -129,25 +129,62 @@ the evaluator checks only the capacity, which solves the original
 12-experiment problem (4096 selections) and is used to cross-check the
 dynamic programming solution.
 
-4. Output and comparison (report_output.py)
+4. Output and rule tests (report_output.py)
 
+Prints every result in one consistent format, prints the comparison summary,
+and runs the rule tests required by the Change Request.
 
-FUNCTION print_result(label, chosen, weight, rating):
+FUNCTION ids_of(chosen):
+    RETURN the experiment IDs in chosen, joined with ", "
+
+FUNCTION print_result(label, chosen, adjusted_mass = none, rating = none):
+    result = evaluate_manifest(chosen)
+    IF adjusted_mass was not given: adjusted_mass = result.adjusted_mass
+    IF rating was not given:        rating = result.rating
+    baseline = sum of baseline weights in chosen
+
     print label
     FOR EACH exp IN chosen:
-        print number, name, weight, rating
-    print total weight and total rating
+        print ID, name, baseline weight, rating
+    print the list of IDs
+    print baseline mass, adjusted mass, and total rating
 
 FUNCTION print_comparison(greedy_results, optimal_rating):
     print optimal_rating
     FOR EACH (strategy_name, chosen) IN greedy_results:
-        (weight, rating) = totals(chosen)
-        IF rating == optimal_rating:
+        result = evaluate_manifest(chosen)
+        IF result.rating == optimal_rating:
             verdict = "MATCHES OPTIMAL"
         ELSE:
-            verdict = "DOES NOT MATCH" plus (optimal_rating - rating)
-        print strategy_name, weight, rating, verdict
+            verdict = "DOES NOT MATCH" plus (optimal_rating - result.rating)
+        print strategy_name, adjusted mass, rating, verdict
 
+Rule tests. Each entry is (rule, candidate IDs, expected feasible,
+expected adjusted mass). The first three come from the Change Request:
+
+RULE_TESTS = [
+    ("Solar limit",         {2, 3, 7},                 reject, 542),
+    ("Solar limit",         {2, 3},                    accept, 452),
+    ("11a prerequisite",    {11a},                     reject, 10),
+    ("11a prerequisite",    {11, 11a},                 accept, 90),
+    ("Thermal mass credit", {1, 2, 4, 6, 10, 12},      accept, 700),
+    ("Thermal mass credit", {1, 2, 4, 5, 10, 12},      reject, 804)
+]
+
+FUNCTION run_rule_tests():
+    all_ok = TRUE
+    print table header
+    FOR EACH (rule, ids, expected_feasible, expected_mass) IN RULE_TESTS:
+        result = evaluate_manifest(manifest_from_ids(ids))
+        passed = (result.feasible == expected_feasible)
+                 AND (result.adjusted_mass == expected_mass)
+        IF NOT passed: all_ok = FALSE
+        print rule, ids, expected result, actual result, PASS or FAIL
+    RETURN all_ok
+
+The last test shows that Experiment 12 without Experiment 6 earns no thermal
+credit, so that manifest keeps its full 804 kg baseline mass and is rejected
+for exceeding the capacity.
 
 5. Main program (main.py)
 
