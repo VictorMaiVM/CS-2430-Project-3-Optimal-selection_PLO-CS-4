@@ -5,15 +5,28 @@ weight, and rating. Experiments are indivisible.
 
 1. Shared data and helpers (experiments.py)
 
+Each experiment is a record: (ID, name, baseline weight in kg, rating).
+IDs are text because the revised manifest includes "11a".
 
-CONSTANT CAPACITY = 700
-CONSTANT EXPERIMENTS = list of 12 (number, name, weight, rating) records
+CONSTANT CAPACITY_LIMIT = 700                    # applies to ADJUSTED mass
+
+CONSTANT BASELINE_EXPERIMENTS = list of the original 12 experiments
+CONSTANT REVISED_EXPERIMENTS  = list of 13 experiments:
+    the original 12 with Experiment 11 renamed "Cosmic Rays (Primary Band)"
+    and the new Experiment 11a "Cosmic Rays (Secondary Band)"
+    (weight 10, rating 5) added after it
+CONSTANT EXPERIMENTS = REVISED_EXPERIMENTS       # default data for the solvers
 
 FUNCTION ratio(exp):
     RETURN exp.rating / exp.weight
 
 FUNCTION totals(chosen):
-    RETURN (sum of weights in chosen, sum of ratings in chosen)
+    RETURN (sum of baseline weights in chosen, sum of ratings in chosen)
+
+The baseline list is kept so the original 12-experiment problem (capacity
+check only) can still be solved and used to cross-check the dynamic
+programming solution. The revised rules (solar limit, thermal credit, 11a
+prerequisite) are not stored here; they live in the shared evaluator.
 
 
 2. Greedy strategies (greedy.py)

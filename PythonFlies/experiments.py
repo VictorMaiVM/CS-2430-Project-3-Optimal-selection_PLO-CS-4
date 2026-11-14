@@ -15,7 +15,7 @@ Experiment = namedtuple("Experiment", ["number", "name", "weight", "rating"])
 CAPACITY_LIMIT = 700
 
 # The 12 experiments(indivisible items).
-EXPERIMENTS = [
+BASELINE_EXPERIMENTS = [
     Experiment(1, "Cloud Patterns", 36, 5),
     Experiment(2, "Solar Flares", 264, 9),
     Experiment(3, "Solar Power", 188, 6),
@@ -43,11 +43,12 @@ REVISED_EXPERIMENTS = [
     Experiment("9", "Microgravity Plant Growth", 75, 5),
     Experiment("10", "Micrometeorites", 170, 9),
     Experiment("11", "Cosmic Rays (Primary Band)", 80, 7),
-    Experiment("11a", "Comic Rays (Secondary Band)", 10, 5),
+    Experiment("11a", "Cosmic Rays (Secondary Band)", 10, 5),
     Experiment("12", "Yeast Fermentation", 27, 4),
 ]
 
 EXPERIMENTS = REVISED_EXPERIMENTS
+
 
 def ratio(exp):
     #Return the rating-to-weight score (rating / weight) for an experiment.
