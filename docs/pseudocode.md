@@ -78,36 +78,43 @@ lets 11a join if 11 has been selected since.
 
 3. Brute-force search (brute_force.py)
 
-Each number from 0 to 4095, written in binary, is one subset. If bit i is 1,
-experiment i is included.
+Each number from 0 to 2^n - 1, written in binary, is one possible selection.
+If bit i is 1, the experiment at list position i is in the selection. With the
+revised manifest n = 13, so 2^13 = 8192 selections are checked, including
+selections that break one or more rules. The shared evaluator
+(manifest_rules.py) decides which are feasible.
 
+FUNCTION brute_force_top3(experiments, capacity, apply_rules = TRUE):
+    n = number of experiments                    (13)
+    feasible = empty list
+    selections_checked = 0
 
-FUNCTION brute_force_top3(experiments, capacity):
-    n = number of experiments            (12)
-    valid_subsets = empty list
-    subsets_checked = 0
+    FOR bitmask FROM 0 TO (2^n - 1):
+        selections_checked = selections_checked + 1
 
-    FOR mask FROM 0 TO (2^n - 1):
-        subsets_checked = subsets_checked + 1
+        # Decode the bitmask into a list of experiments
         chosen = empty list
-
         FOR i FROM 0 TO n - 1:
-            IF bit i of mask is 1:
+            IF bit i of bitmask is 1:
                 add experiments[i] to chosen
 
-        (weight, rating) = totals(chosen)
+        # Apply the revised rules and the adjusted-mass capacity check
+        result = evaluate_manifest(chosen, capacity, apply_rules)
 
-        IF weight <= capacity:
-            add (chosen, weight, rating) to valid_subsets
+        IF result is feasible:
+            add (chosen, result.adjusted_mass, result.rating) to feasible
 
-    sort valid_subsets by rating (highest first),
-        ties broken by lower total weight
-    top3 = first 3 entries of valid_subsets
+    sort feasible by rating (highest first),
+         ties broken by lower adjusted mass
 
-    RETURN top3, subsets_checked, number of valid_subsets
+    RETURN first 3 entries of feasible,
+           selections_checked,
+           number of entries in feasible
 
-
-The first entry of top3 is the optimal solution.
+The first entry returned is the optimal manifest. When apply_rules is FALSE,
+the evaluator checks only the capacity, which solves the original
+12-experiment problem (4096 selections) and is used to cross-check the
+dynamic programming solution.
 
 4. Output and comparison (report_output.py)
 

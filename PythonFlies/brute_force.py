@@ -1,5 +1,5 @@
 #Team name:     Team 3
-#Team members:  Dominique Frank, Vitor Mai, Erich Mundt
+#Team members:  Dominique Frank, Victor Mai, Erich Mundt
 #Course:        CS 2430, section 502
 #Project:       Programming Project 3
 
@@ -15,7 +15,7 @@
 #from 0 to 8191 visits every possible selection exactly once.
 
 
-from experiments import EXPERIMENTS, CAPACITY_LIMIT, totals
+from experiments import EXPERIMENTS, CAPACITY_LIMIT
 from manifest_rules import evaluate_manifest
 
 
@@ -33,7 +33,7 @@ def brute_force_top3(experiments=EXPERIMENTS, capacity=CAPACITY_LIMIT,
 
     for bitmask in range(2 ** n):
         selections_checked += 1
-        # Pick experiment i whenever bit i of j is set.
+        # Pick experiment i whenever bit i of the bitmask is set.
         chosen = [experiments[i] for i in range(n) if bitmask & (1 << i)]
         result = evaluate_manifest(chosen, capacity, apply_rules)
         if result.feasible:
