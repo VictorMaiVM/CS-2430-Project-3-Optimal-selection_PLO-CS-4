@@ -15,9 +15,9 @@ Evidence below comes from the repository history (`git log --all`).
 
 | Member | Role for Project 3 | Role in Project 2 |
 |---|---|---|
-| Dominique Frank | **TO FILL** (Implementation / Verification / Communications Lead) | **TO FILL** |
-| Victor Mai | **TO FILL** | **TO FILL** |
-| Erich Mundt | **TO FILL** | **TO FILL** |
+| Dominique Frank | Communications Lead | Implementation Lead |
+| Victor Mai | Verification Lead| **TO FILL** |
+| Erich Mundt | Implementation Lead| **TO FILL** |
 
 ## Responsibilities and evidence
 
@@ -43,9 +43,9 @@ Evidence below comes from the repository history (`git log --all`).
 | Design artifact 1: structure diagram (`docs/Stucture_Diagram`) | Wr3stl3r | b392624 |
 | Design artifact 2: pseudocode (`docs/pseudocode.md`) | Wr3stl3r | a5f084f (created), eaed1aa, b2e0ccf, d484b81, fa06f59, 70929da, e1c45d4 (updated to match the current code) |
 | README (`README.md`) | DMF-Offb | 1042ea8, 1407b5b, 8a847ee |
-| Team report | **TO FILL** | **TO FILL** (draft location or file name) |
-| Screencast | **TO FILL** | **TO FILL** (link or file name) |
-| Final zip package and checks | **TO FILL** | **TO FILL** |
+| Team report | DMF-Offb; Victor Mai | Programming Project 3: Report |
+| Screencast | DMF-Offb | **TO FILL** (link or file name) |
+| Final zip package and checks | DMF-Offb | **TO FILL** |
 
 ### Change Request work (Nov 9 to Nov 12)
 
