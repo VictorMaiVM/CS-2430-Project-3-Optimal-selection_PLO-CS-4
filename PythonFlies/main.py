@@ -44,7 +44,6 @@ def main():
         print_result(label, chosen, mass, rating)
 
     # Rule tests required by the Change Request.
-    print("=========== RULE TESTS ===========\n")
     run_rule_tests()
 
     # Part 3: comparison summary.
@@ -52,11 +51,11 @@ def main():
     print_comparison(greedy_results, top3[0][2])
 
     # Part 4: dynamic programming
-    print("=========== PART 4: Dynamic Programming ===========\n")
+    print("=========== PART 4: Dynamic Programming (original 12-experiment problem)===========\n")
     dp_chosen, dp_weight, dp_rating, _ = dp_knapsack()
     print_result("Dynamic Programming", dp_chosen, dp_weight, dp_rating)
     base_top3, _, _ = brute_force_top3(BASELINE_EXPERIMENTS, CAPACITY_LIMIT, apply_rules=False)
-    print(f"Matches original-problem brute-force optimum: {dp_rating == top3[0][2]}\n")
+    print(f"Matches original-problem brute-force optimum: {dp_rating == base_top3[0][2]}\n")
     compare_runtimes()
 
 
