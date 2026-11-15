@@ -17,7 +17,7 @@ Evidence below comes from the repository history (`git log --all`).
 |---|---|---|
 | Dominique Frank | Communications Lead | Implementation Lead |
 | Victor Mai | Verification Lead| **TO FILL** |
-| Erich Mundt | Implementation Lead| **TO FILL** |
+| Erich Mundt | Implementation Lead| Communications |
 
 ## Responsibilities and evidence
 
