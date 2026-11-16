@@ -44,8 +44,9 @@ Evidence below comes from the repository history (`git log --all`).
 | Design artifact 2: pseudocode (`docs/pseudocode.md`) | Wr3stl3r | a5f084f (created), eaed1aa, b2e0ccf, d484b81, fa06f59, 70929da, e1c45d4 (updated to match the current code) |
 | README (`README.md`) | DMF-Offb | 1042ea8, 1407b5b, 8a847ee |
 | Team report | DMF-Offb; Victor Mai | Programming Project 3: Report |
-| Screencast | DMF-Offb | **TO FILL** (link or file name) |
-| Final zip package and checks | DMF-Offb | **TO FILL** |
+| Screencast | Team | Canvas |
+| Screencast Edit | DMF-Offb | Canvas |
+| Final zip package and checks | DMF-Offb | Canvas |
 
 ### Change Request work (Nov 9 to Nov 12)
 
